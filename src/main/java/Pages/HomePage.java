@@ -7,7 +7,7 @@ import org.openqa.selenium.support.FindBy;
 
 import java.util.Random;
 
-import static Controllers.TabsContainer.Tab.MainCategory.SecondaryCategory.*;
+import static Controllers.TabsContainer.Tab.MainCategory.SecondaryCategory;
 
 public class HomePage extends BasePage {
 
@@ -21,6 +21,12 @@ public class HomePage extends BasePage {
         return this;
     }
 
+    public HomePage navigateTo() {
+        logo.click();
+        waitForElementToAppear(categoriesContainer);
+        return this;
+    }
+
     public HomePage navigateToRandomCategory(String tabName) throws Exception {
         var tabContainer = new TabsContainer(categoriesContainer);
 
@@ -30,7 +36,7 @@ public class HomePage extends BasePage {
                 tabContainer.getTabByName(tabName).getMainCategories()
                         .get(mainCategoryIndex).getSecondaryCategories().size());
 
-        navigateTo(tabContainer.getTabByName(tabName)
+        SecondaryCategory.navigateTo(tabContainer.getTabByName(tabName)
                 .getMainCategories().get(mainCategoryIndex).getSecondaryCategories().get(secondaryCategoryIndex));
 
         waitForJQuery();
@@ -40,6 +46,9 @@ public class HomePage extends BasePage {
     @FindBy(xpath = "//i[@data-role='accept-consent']")
     WebElement closeAgreementPopupButton;
 
-    @FindBy (css = "div[data-box-name='left column'] div[data-role='tabs-container']") //(xpath = "//div[@data-box-name='left column']//div[@data-role='tabs-container']")
-    WebElement categoriesContainer;
+    @FindBy(css = "div[data-box-name='left column'] div[data-role='tabs-container']") //(xpath = "//div[@data-box-name='left column']//div[@data-role='tabs-container']")
+            WebElement categoriesContainer;
+
+    @FindBy(css = "[data-description='header logo']")
+    WebElement logo;
 }

@@ -1,6 +1,7 @@
 package Pages;
 
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
@@ -10,7 +11,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class BasePage {
 
-    private static final int TIMEOUT = 5;
+    private static final int TIMEOUT = 20;
     private static final int POLLING = 100;
 
     public static WebDriver driver;
@@ -23,15 +24,22 @@ public class BasePage {
     }
 
     public static void waitForElementToAppear(WebElement element) {
-        wait.until(ExpectedConditions.visibilityOf(element));
+        waitForJQuery();
+        try {
+            wait.until(ExpectedConditions.visibilityOf(element));
+        }
+        catch (StaleElementReferenceException e) {
+            wait.until(ExpectedConditions.visibilityOf(element));
+        }
     }
 
     protected void waitForElementToDisappear(WebElement element) {
+        waitForJQuery();
         wait.until(ExpectedConditions.invisibilityOf(element));
     }
 
-    protected void waitForJQuery() {
-        (new WebDriverWait(driver, 10)).until((ExpectedCondition<Boolean>) d -> {
+    protected static void waitForJQuery() {
+        (new WebDriverWait(driver, TIMEOUT)).until((ExpectedCondition<Boolean>) d -> {
             JavascriptExecutor js = (JavascriptExecutor) d;
             return (Boolean) js.executeScript("return document.readyState").toString().equals("complete");
         });

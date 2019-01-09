@@ -1,18 +1,17 @@
 package Models;
 
-import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Order {
-    List<SingleProductTypeOrder> singleProductTypeOrders = new ArrayList<>();
-    BigDecimal subTotalPrice;
-    BigDecimal deliveryPrice;
-    BigDecimal totalPrice;
+    public List<SingleProductTypeOrder> singleProductTypeOrders = new ArrayList<>();
+    public int totalQuantity = 0;
+    public BigDecimal subTotalPrice = new BigDecimal(0);
+    public BigDecimal deliveryPrice = new BigDecimal(0);
+    public BigDecimal totalPrice = new BigDecimal(0);
 
-    public Order setProductQuantity(List<SingleProductTypeOrder> singleProductTypeOrders) {
+    public Order setProductsAndQuantities(List<SingleProductTypeOrder> singleProductTypeOrders) {
         this.singleProductTypeOrders = singleProductTypeOrders;
         return this;
     }
@@ -32,21 +31,29 @@ public class Order {
         return this;
     }
 
+    public Order setTotalQuantity(int totalQuantity) {
+        this.totalQuantity = totalQuantity;
+        return this;
+    }
+
     public Order addProductToOrder(SingleProductTypeOrder singleProductTypeOrder) {
         SingleProductTypeOrder existingProduct = this.singleProductTypeOrders.stream()
-                .filter(order -> order.product.name == singleProductTypeOrder.product.name)
-                .findFirst()
+                .filter(order -> order.product.name.equals(singleProductTypeOrder.product.name))
+                .findAny()
                 .orElse(null);
+
+        BigDecimal priceDelta = singleProductTypeOrder.product.price
+                .multiply(new BigDecimal(singleProductTypeOrder.quantity));
 
         if (existingProduct != null) {
             existingProduct.quantity += singleProductTypeOrder.quantity;
-            existingProduct.totalPrice = existingProduct.totalPrice.add(
-                    existingProduct.product.price
-                    .multiply(new BigDecimal(singleProductTypeOrder.quantity)));
+            existingProduct.totalPrice = existingProduct.totalPrice.add(priceDelta);
         }
         else
             this.singleProductTypeOrders.add(singleProductTypeOrder);
 
+        setSubTotalPrice(this.subTotalPrice.add(priceDelta));
+        setTotalQuantity(this.totalQuantity + singleProductTypeOrder.quantity);
         return this;
     }
 

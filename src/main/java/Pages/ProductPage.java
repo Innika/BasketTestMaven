@@ -12,11 +12,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ProductPage extends BasePage {
-    public ProductPageValidator pageValidator;
+    public ProductPageValidator validator;
 
     public ProductPage(WebDriver driver) {
         super(driver);
-        pageValidator = new ProductPageValidator(this);
+        validator = new ProductPageValidator(this);
     }
 
 
@@ -40,13 +40,15 @@ public class ProductPage extends BasePage {
         return new BigDecimal(finalPrice);
     }
 
-    public ProductPage addToCart(Order order, Integer quantity, Boolean goToCart) {
+    public ProductPage addToBasket(Order order, Integer quantity, Boolean goToCart) {
         Product product = new Product().setName(getProductName()).setPrice(getPrice());
 
         //TODO: handnle cases when there's only one unit of product available
 
-        quantityInput.clear();
-        quantityInput.sendKeys(quantity.toString());
+        if (quantity != 1) {
+            quantityInput.clear();
+            quantityInput.sendKeys(quantity.toString());
+        }
 
         addToCartButton.click();
         waitForElementToAppear(goToCartButton);

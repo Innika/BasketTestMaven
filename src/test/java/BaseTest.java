@@ -1,3 +1,4 @@
+import Pages.BasketPage;
 import Pages.HomePage;
 import Pages.ProductPage;
 import Pages.ProductsListPage;
@@ -11,6 +12,7 @@ public class BaseTest {
     HomePage homePage;
     ProductsListPage productsListPage;
     ProductPage productPage;
+    BasketPage basketPage;
 
     @BeforeClass
     public void setUp(){
@@ -23,6 +25,7 @@ public class BaseTest {
         homePage = new HomePage(driver);
         productsListPage = new ProductsListPage(driver);
         productPage = new ProductPage(driver);
+        basketPage = new BasketPage(driver);
     }
 
     @AfterClass

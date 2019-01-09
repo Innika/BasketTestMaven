@@ -1,23 +1,34 @@
 import Models.Order;
 import Models.Product;
-import Pages.ProductPage;
 import org.testng.annotations.Test;
+
+import java.util.Random;
 
 public class BasketTest extends BaseTest {
 
     @Test
     public void basketTest() throws Throwable {
-
-        homePage.closeAgreementPopup()
-                .navigateToRandomCategory("dzialy");
-
-        Product productArticle = productsListPage.SelectRandomProductArticle();
-
-        Product productItem = new Product();
         Order expectedOrder = new Order();
+        int singleTypeProductQuantity = 1;
+        homePage.closeAgreementPopup();
 
-        productItem.setName(productPage.getProductName()).setPrice(productPage.getPrice());
-        ((ProductPage)productPage.pageValidator.productSelectedMatсhesArticle(productArticle, productItem))
-                .addToCart(expectedOrder, 3, false);
+        for (int i = 0; i < 4; i++) {
+            homePage.navigateTo().navigateToRandomCategory("dzialy");
+
+            Product productArticle = productsListPage.SelectRandomProductArticle();
+            Product productItem = new Product();
+
+            productItem.setName(productPage.getProductName()).setPrice(productPage.getPrice());
+            productPage.validator.productSelectedMatсhesArticle(productArticle, productItem);
+
+            for (int j = 0; j < singleTypeProductQuantity; j++) {
+                //TODO: add handler licytacji
+                productPage.addToBasket(expectedOrder, 1, false);
+                basketPage.validator.verifyProductsQuantityInBasket(expectedOrder.totalQuantity);
+            }
+            singleTypeProductQuantity = 1 + new Random().nextInt(2);
+        }
+
+        basketPage.NavigateTo();
     }
 }
