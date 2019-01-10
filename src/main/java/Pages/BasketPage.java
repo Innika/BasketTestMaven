@@ -1,5 +1,7 @@
 package Pages;
 
+import Controllers.BasketItemsContainer;
+import Models.Order;
 import Validators.BasketPageValidator;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -13,14 +15,21 @@ public class BasketPage extends BasePage {
         validator = new BasketPageValidator(this);
     }
 
-    public BasketPage NavigateTo(){
-        headerBasketQuantity.click();
-        waitForElementToAppear(basketForm);
-        return  this;
+    public static int getProductsQuantity() {
+        return Integer.parseInt(headerBasketQuantity.getText());
     }
 
-    public static int getProductsQantity() {
-        return Integer.parseInt(headerBasketQuantity.getText());
+    public BasketPage navigateTo() {
+        headerBasketQuantity.click();
+        waitForElementToAppear(basketForm);
+        return this;
+    }
+
+    public Order getOrder() throws Exception {
+        var basketItemsList = new BasketItemsContainer(basketForm);
+
+        return new Order().setProductsAndQuantities(basketItemsList.getSubOrders())
+                .setSubTotalPrice(basketItemsList.getSubTotalPrice());
     }
 
     @FindBy(css = "[data-role='cart-quantity']")

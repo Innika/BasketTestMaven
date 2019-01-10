@@ -29,6 +29,6 @@ public class BasketTest extends BaseTest {
             singleTypeProductQuantity = 1 + new Random().nextInt(2);
         }
 
-        basketPage.NavigateTo();
+        basketPage.navigateTo().validator.verifyOrder(expectedOrder, basketPage.getOrder());
     }
 }

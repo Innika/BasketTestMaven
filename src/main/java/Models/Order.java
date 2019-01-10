@@ -2,6 +2,8 @@ package Models;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Order {
@@ -13,6 +15,10 @@ public class Order {
 
     public Order setProductsAndQuantities(List<SingleProductTypeOrder> singleProductTypeOrders) {
         this.singleProductTypeOrders = singleProductTypeOrders;
+        Collections.sort(this.singleProductTypeOrders, Comparator.comparing(o -> o.product.name));
+        for (var product : this.singleProductTypeOrders) {
+            this.totalQuantity += product.quantity;
+        }
         return this;
     }
 
@@ -48,10 +54,10 @@ public class Order {
         if (existingProduct != null) {
             existingProduct.quantity += singleProductTypeOrder.quantity;
             existingProduct.totalPrice = existingProduct.totalPrice.add(priceDelta);
-        }
-        else
+        } else {
             this.singleProductTypeOrders.add(singleProductTypeOrder);
-
+            Collections.sort(this.singleProductTypeOrders, Comparator.comparing(o -> o.product.name));
+        }
         setSubTotalPrice(this.subTotalPrice.add(priceDelta));
         setTotalQuantity(this.totalQuantity + singleProductTypeOrder.quantity);
         return this;

@@ -9,6 +9,10 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.math.BigDecimal;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class BasePage {
 
     private static final int TIMEOUT = 20;
@@ -43,5 +47,16 @@ public class BasePage {
             JavascriptExecutor js = (JavascriptExecutor) d;
             return (Boolean) js.executeScript("return document.readyState").toString().equals("complete");
         });
+    }
+
+    public static BigDecimal getPriceFromText(String price) {
+        price = price.replace(" ", "");
+        price = price.replace(',', '.');
+
+        Pattern p = Pattern.compile("[\\d.]+");
+        Matcher m = p.matcher(price);
+        m.find();
+        String finalPrice = m.group();
+        return new BigDecimal(finalPrice);
     }
 }

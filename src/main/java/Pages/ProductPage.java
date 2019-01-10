@@ -28,16 +28,7 @@ public class ProductPage extends BasePage {
     public BigDecimal getPrice() {
         waitForElementToAppear(priceLabel);
 
-        String price = priceLabel.getText();
-        price = price.replace(" ", "");
-        price = price.replace(',', '.');
-
-        Pattern p = Pattern.compile("[\\d.]+");
-        Matcher m = p.matcher(price);
-        m.find();
-        String finalPrice = m.group();
-
-        return new BigDecimal(finalPrice);
+        return getPriceFromText(priceLabel.getText());
     }
 
     public ProductPage addToBasket(Order order, Integer quantity, Boolean goToCart) {
