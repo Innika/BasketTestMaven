@@ -8,8 +8,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import java.math.BigDecimal;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class ProductPage extends BasePage {
     public ProductPageValidator validator;
@@ -18,7 +16,6 @@ public class ProductPage extends BasePage {
         super(driver);
         validator = new ProductPageValidator(this);
     }
-
 
     public String getProductName() {
         waitForElementToAppear(nameLabel);

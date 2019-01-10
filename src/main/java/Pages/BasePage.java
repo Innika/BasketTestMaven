@@ -10,6 +10,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -31,8 +33,7 @@ public class BasePage {
         waitForJQuery();
         try {
             wait.until(ExpectedConditions.visibilityOf(element));
-        }
-        catch (StaleElementReferenceException e) {
+        } catch (StaleElementReferenceException e) {
             wait.until(ExpectedConditions.visibilityOf(element));
         }
     }
@@ -58,5 +59,14 @@ public class BasePage {
         m.find();
         String finalPrice = m.group();
         return new BigDecimal(finalPrice);
+    }
+
+    public Object getRandomElementFromList(List<?> listToSelectFrom) {
+        int index = new Random().nextInt(listToSelectFrom.size() - 1);
+        return listToSelectFrom.get(index);
+    }
+
+    public static int getRandomIntInBoundaries(int startInt, int endInt) {
+        return startInt + new Random().nextInt(endInt - startInt);
     }
 }

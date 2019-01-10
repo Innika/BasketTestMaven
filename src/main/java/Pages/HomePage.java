@@ -5,8 +5,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-import java.util.Random;
-
 import static Controllers.TabsContainer.Tab.MainCategory.SecondaryCategory;
 
 public class HomePage extends BasePage {
@@ -30,14 +28,10 @@ public class HomePage extends BasePage {
     public HomePage navigateToRandomCategory(String tabName) throws Exception {
         var tabContainer = new TabsContainer(categoriesContainer);
 
-        Random rand = new Random();
-        int mainCategoryIndex = rand.nextInt(tabContainer.getTabByName(tabName).getMainCategories().size());
-        int secondaryCategoryIndex = rand.nextInt(
-                tabContainer.getTabByName(tabName).getMainCategories()
-                        .get(mainCategoryIndex).getSecondaryCategories().size());
+        var randomMainCategory = (TabsContainer.Tab.MainCategory) getRandomElementFromList(tabContainer.getTabByName(tabName).getMainCategories());
+        var randomSecondaryCategory = (SecondaryCategory) getRandomElementFromList(randomMainCategory.getSecondaryCategories());
 
-        SecondaryCategory.navigateTo(tabContainer.getTabByName(tabName)
-                .getMainCategories().get(mainCategoryIndex).getSecondaryCategories().get(secondaryCategoryIndex));
+        SecondaryCategory.navigateTo(randomSecondaryCategory);
 
         waitForJQuery();
         return this;

@@ -19,7 +19,7 @@ public class BasketItemsContainer {
         var itemsContainerFormElements = itemsContainerFormElement.findElements(By.cssSelector(".cart-items"));
         if (itemsContainerFormElements.size() > 0) {
             this.itemsContainerFormElement = itemsContainerFormElement;
-            itemsContainerElement = itemsContainerFormElements.get(0);
+            this.itemsContainerElement = itemsContainerFormElements.get(0);
         } else
             throw new Exception("The element isn't a BasketItemsContainer type");
     }
@@ -66,8 +66,9 @@ public class BasketItemsContainer {
     }
 
     public BigDecimal getSubTotalPrice() {
-        return getPriceFromText(this.itemsContainerFormElement.findElement(
-                By.cssSelector(".summation .m-price"))
-                .getText());
+        return getPriceFromText(
+                this.itemsContainerFormElement.findElement(
+                        By.cssSelector(".summation .m-price"))
+                        .getText());
     }
 }

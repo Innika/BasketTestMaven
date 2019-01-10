@@ -2,7 +2,7 @@ import Models.Order;
 import Models.Product;
 import org.testng.annotations.Test;
 
-import java.util.Random;
+import static Pages.BasePage.getRandomIntInBoundaries;
 
 public class BasketTest extends BaseTest {
 
@@ -26,7 +26,7 @@ public class BasketTest extends BaseTest {
                 productPage.addToBasket(expectedOrder, 1, false);
                 basketPage.validator.verifyProductsQuantityInBasket(expectedOrder.totalQuantity);
             }
-            singleTypeProductQuantity = 1 + new Random().nextInt(2);
+            singleTypeProductQuantity = getRandomIntInBoundaries(1, 3);
         }
 
         basketPage.navigateTo().validator.verifyOrder(expectedOrder, basketPage.getOrder());
