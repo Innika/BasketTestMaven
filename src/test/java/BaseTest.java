@@ -2,10 +2,14 @@ import Pages.BasketPage;
 import Pages.HomePage;
 import Pages.ProductPage;
 import Pages.ProductsListPage;
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+
+import java.io.File;
+import java.util.Date;
 
 public class BaseTest {
     WebDriver driver;
@@ -15,7 +19,9 @@ public class BaseTest {
     BasketPage basketPage;
 
     @BeforeClass
-    public void setUp() {
+    public void setUp() throws Exception {
+        deleteReportResources();
+
         System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
         driver = new ChromeDriver();
         driver.manage().window().maximize();
@@ -28,7 +34,26 @@ public class BaseTest {
     }
 
     @AfterClass
-    public void tearDown() {
+    public void tearDown() throws Exception {
         driver.quit();
+        createHtmlReport();
     }
+
+    private void createHtmlReport() throws Exception {
+        var file = new File(String.format(".\\target\\reports\\%s",
+                new Date().toString().replace(':', '-')));
+        file.mkdirs();
+
+        var process = Runtime.getRuntime().exec(String.format("cmd.exe /c allure generate -o \"%s\"",
+                file.getPath()));
+        process.waitFor();
+
+        if (file.list().length > 0)
+            deleteReportResources();
+    }
+
+    private void deleteReportResources() throws Exception {
+        FileUtils.cleanDirectory(new File("allure-results"));
+    }
+
 }
