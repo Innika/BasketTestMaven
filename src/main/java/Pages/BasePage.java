@@ -1,9 +1,7 @@
 package Pages;
 
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.StaleElementReferenceException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import io.qameta.allure.Attachment;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -49,6 +47,21 @@ public class BasePage {
             return (Boolean) js.executeScript("return document.readyState").toString().equals("complete");
         });
     }
+
+    private static byte[] takeScreenshot() {
+        return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+    }
+
+    @Attachment(value = "Success", type = "image/png")
+    public static byte[] takeScreenshotOnSuccess() {
+        return takeScreenshot();
+    }
+
+    @Attachment(value = "Fail", type = "image/png")
+    public static byte[] takeScreenshotOnFail() {
+    return takeScreenshot();
+    }
+
 
     public static BigDecimal getPriceFromText(String price) {
         price = price.replace(" ", "");

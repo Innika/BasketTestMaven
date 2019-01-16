@@ -8,6 +8,8 @@ import org.openqa.selenium.interactions.Actions;
 import java.util.ArrayList;
 import java.util.List;
 
+import static Pages.BasePage.takeScreenshotOnSuccess;
+
 public class TabsContainer {
     static WebElement tabContainerElement;
 
@@ -97,6 +99,7 @@ public class TabsContainer {
                     Actions action = new Actions(BasePage.driver);
                     action.moveToElement(category.mainCategoryElement).build().perform();
 
+                    takeScreenshotOnSuccess();
                     BasePage.waitForElementToAppear(category.secondaryCategoryElement);
                     category.secondaryCategoryElement.click();
                 }

@@ -15,13 +15,12 @@ public class BaseTest {
     BasketPage basketPage;
 
     @BeforeClass
-    public void setUp(){
+    public void setUp() {
         System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.get("https://allegro.pl");
 
-        //TODO: add reporting
         homePage = new HomePage(driver);
         productsListPage = new ProductsListPage(driver);
         productPage = new ProductPage(driver);
@@ -29,9 +28,7 @@ public class BaseTest {
     }
 
     @AfterClass
-    public void tearDown() throws Exception{
+    public void tearDown() {
         driver.quit();
-
-        //TODO: stop reporting
     }
 }

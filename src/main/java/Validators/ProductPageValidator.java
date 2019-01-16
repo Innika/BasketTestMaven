@@ -1,17 +1,21 @@
 package Validators;
 
 import Models.Product;
-import Pages.BasePage;
 import Pages.ProductPage;
+import io.qameta.allure.Step;
 import org.testng.Assert;
+
+import static Pages.BasePage.takeScreenshotOnSuccess;
 
 public class ProductPageValidator extends BasePageValidator {
     public ProductPageValidator(ProductPage currentPageInstance) {
         super(currentPageInstance);
     }
 
-    public ProductPage productSelectedMatсhesArticle(Product productArticle, Product selectedProduct){
+    @Step("Verify if product opened is the same as the one we clicked on before")
+    public ProductPage productSelectedMatсhesArticle(Product productArticle, Product selectedProduct) {
         Assert.assertEquals(productArticle.name, selectedProduct.name);
-        return (ProductPage)this.pageInstance;
+        takeScreenshotOnSuccess();
+        return (ProductPage) this.pageInstance;
     }
 }

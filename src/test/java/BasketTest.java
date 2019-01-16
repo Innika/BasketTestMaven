@@ -1,15 +1,18 @@
 import Models.Order;
 import Models.Product;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import static Pages.BasePage.getRandomIntInBoundaries;
 
+@Listeners(AllureListener.class)
 public class BasketTest extends BaseTest {
 
-    @Test
+    @Test(description = "Add products to the basket on Allegro and verify the order correctness")
     public void basketTest() throws Throwable {
         Order expectedOrder = new Order();
         int singleTypeProductQuantity = 1;
+
         homePage.closeAgreementPopup();
 
         for (int i = 0; i < 4; i++) {
@@ -29,6 +32,7 @@ public class BasketTest extends BaseTest {
             singleTypeProductQuantity = getRandomIntInBoundaries(1, 3);
         }
 
-        basketPage.navigateTo().validator.verifyOrder(expectedOrder, basketPage.getOrder());
+        basketPage.navigateTo().validator.verifyOrder(expectedOrder, basketPage.getOrder())
+                .navigateToDeliveryAndPayment();
     }
 }

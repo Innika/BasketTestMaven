@@ -1,6 +1,7 @@
 package Pages;
 
 import Controllers.TabsContainer;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -13,9 +14,12 @@ public class HomePage extends BasePage {
         super(driver);
     }
 
+    @Step("Navigate to http://allegro.pl")
     public HomePage closeAgreementPopup() {
+        takeScreenshotOnSuccess();
         this.closeAgreementPopupButton.click();
         waitForElementToDisappear(this.closeAgreementPopupButton);
+        takeScreenshotOnSuccess();
         return this;
     }
 
@@ -25,6 +29,7 @@ public class HomePage extends BasePage {
         return this;
     }
 
+    @Step("Select random category")
     public HomePage navigateToRandomCategory(String tabName) throws Exception {
         var tabContainer = new TabsContainer(categoriesContainer);
 
@@ -34,6 +39,8 @@ public class HomePage extends BasePage {
         SecondaryCategory.navigateTo(randomSecondaryCategory);
 
         waitForJQuery();
+
+        takeScreenshotOnSuccess();
         return this;
     }
 

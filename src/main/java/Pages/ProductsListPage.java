@@ -2,27 +2,30 @@ package Pages;
 
 import Controllers.ArticlesContainer;
 import Models.Product;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-import java.util.Random;
-
 public class ProductsListPage extends BasePage {
-    public ProductsListPage(WebDriver driver) {super(driver);}
+    public ProductsListPage(WebDriver driver) {
+        super(driver);
+    }
 
-    public Product SelectRandomProductArticle() throws Exception{
+    @Step("Select random product")
+    public Product SelectRandomProductArticle() throws Exception {
         var productArticle = new Product();
 
         var productList = new ArticlesContainer(productListContainer);
         var articlesList = productList.getArticles();
 
-        int randomIndex = new Random().nextInt(articlesList.size());
-        productArticle.setName(articlesList.get(randomIndex).getName());
+        var randomArticle = (ArticlesContainer.Article) getRandomElementFromList(articlesList);
+        productArticle.setName(randomArticle.getName());
 
-        articlesList.get(randomIndex).articleElement.click();
+        randomArticle.articleElement.click();
         waitForJQuery();
 
+        takeScreenshotOnSuccess();
         return productArticle;
     }
 

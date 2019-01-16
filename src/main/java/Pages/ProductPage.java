@@ -3,6 +3,7 @@ package Pages;
 import Models.Order;
 import Models.Product;
 import Validators.ProductPageValidator;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -28,6 +29,7 @@ public class ProductPage extends BasePage {
         return getPriceFromText(priceLabel.getText());
     }
 
+    @Step("Add the product to basket")
     public ProductPage addToBasket(Order order, Integer quantity, Boolean goToCart) {
         Product product = new Product().setName(getProductName()).setPrice(getPrice());
 
@@ -49,6 +51,7 @@ public class ProductPage extends BasePage {
         order.addProductToOrder(
                 new Order.SingleProductTypeOrder(product, quantity));
         waitForJQuery();
+        takeScreenshotOnSuccess();
         return this;
     }
 
