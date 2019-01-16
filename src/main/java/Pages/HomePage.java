@@ -37,7 +37,6 @@ public class HomePage extends BasePage {
         var randomSecondaryCategory = (SecondaryCategory) getRandomElementFromList(randomMainCategory.getSecondaryCategories());
 
         SecondaryCategory.navigateTo(randomSecondaryCategory);
-
         waitForJQuery();
 
         takeScreenshotOnSuccess();

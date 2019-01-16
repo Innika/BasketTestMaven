@@ -35,8 +35,6 @@ public class ProductPage extends BasePage {
     public ProductPage addToBasket(Order order, Integer quantity, Boolean goToCart) {
         Product product = new Product().setName(getProductName()).setPrice(getPrice());
 
-        //TODO: handnle cases when there's only one unit of product available
-
         if (quantity != 1) {
             quantityInput.clear();
             quantityInput.sendKeys(quantity.toString());

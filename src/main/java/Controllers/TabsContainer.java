@@ -72,7 +72,7 @@ public class TabsContainer {
             public List<SecondaryCategory> getSecondaryCategories() {
                 List<SecondaryCategory> categories = new ArrayList();
 
-                var elements = this.mainCategoryElement.findElements(By.xpath(".//li[count(*)=1]/a"));
+                var elements = this.mainCategoryElement.findElements(By.xpath(".//div[contains(@data-box-name, 'nav-category')]//li[count(*)=1]/a"));
 
                 for (var el : elements) {
                     categories.add(new SecondaryCategory(el, this.mainCategoryElement, this.tabElement));

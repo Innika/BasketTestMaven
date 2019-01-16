@@ -49,6 +49,7 @@ public class BasePage {
     }
 
     private static byte[] takeScreenshot() {
+        getCurrentUrl();
         return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
     }
 
@@ -62,6 +63,10 @@ public class BasePage {
         return takeScreenshot();
     }
 
+    @Attachment(value = "URL")
+    private static String getCurrentUrl(){
+        return driver.getCurrentUrl();
+    }
 
     public static BigDecimal getPriceFromText(String price) {
         price = price.replace(" ", "");
