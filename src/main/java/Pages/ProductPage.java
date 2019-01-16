@@ -4,11 +4,13 @@ import Models.Order;
 import Models.Product;
 import Validators.ProductPageValidator;
 import io.qameta.allure.Step;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class ProductPage extends BasePage {
     public ProductPageValidator validator;
@@ -55,6 +57,10 @@ public class ProductPage extends BasePage {
         return this;
     }
 
+    public Boolean isProductCouldBeAddedToBasket(){
+        return exists(addToCartButtonNoWait) && addToCartButton.isEnabled();
+    }
+
     @FindBy(css = "[itemscope]>div>h1")
     WebElement nameLabel;
 
@@ -64,6 +70,9 @@ public class ProductPage extends BasePage {
     @FindBy(id = "add-to-cart-button")
     WebElement addToCartButton;
 
+    @FindBy(id = "add-to-cart-button")
+    List<WebElement> addToCartButtonNoWait;
+
     @FindBy(id = "add-to-cart-si-precart")
     WebElement goToCartButton;
 
@@ -71,5 +80,5 @@ public class ProductPage extends BasePage {
     WebElement continueShoppingButton;
 
     @FindBy(css = "input[name='quantity']")
-    WebElement quantityInput;
+    public WebElement quantityInput;
 }

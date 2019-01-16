@@ -24,12 +24,17 @@ public class BasketTest extends BaseTest {
             productItem.setName(productPage.getProductName()).setPrice(productPage.getPrice());
             productPage.validator.productSelectedMatсhesArticle(productArticle, productItem);
 
-            for (int j = 0; j < singleTypeProductQuantity; j++) {
-                //TODO: add handler licytacji
-                productPage.addToBasket(expectedOrder, 1, false);
-                basketPage.validator.verifyProductsQuantityInBasket(expectedOrder.totalQuantity);
-            }
-            singleTypeProductQuantity = getRandomIntInBoundaries(1, 3);
+            if (productPage.isProductCouldBeAddedToBasket()) {
+                int maxPossibleQuantity = Integer.parseInt(productPage.quantityInput.getAttribute("max"));
+                singleTypeProductQuantity = (singleTypeProductQuantity > maxPossibleQuantity) ? maxPossibleQuantity : singleTypeProductQuantity;
+
+                for (int j = 0; j < singleTypeProductQuantity; j++) {
+                    productPage.addToBasket(expectedOrder, 1, false);
+                    basketPage.validator.verifyProductsQuantityInBasket(expectedOrder.totalQuantity);
+                }
+                singleTypeProductQuantity = getRandomIntInBoundaries(1, 3);
+            } else
+                i--;
         }
 
         basketPage.navigateTo().validator.verifyOrder(expectedOrder, basketPage.getOrder())

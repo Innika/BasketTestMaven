@@ -55,5 +55,4 @@ public class BaseTest {
     private void deleteReportResources() throws Exception {
         FileUtils.cleanDirectory(new File("allure-results"));
     }
-
 }

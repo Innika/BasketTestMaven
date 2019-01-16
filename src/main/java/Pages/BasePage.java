@@ -59,7 +59,7 @@ public class BasePage {
 
     @Attachment(value = "Fail", type = "image/png")
     public static byte[] takeScreenshotOnFail() {
-    return takeScreenshot();
+        return takeScreenshot();
     }
 
 
@@ -82,4 +82,9 @@ public class BasePage {
     public static int getRandomIntInBoundaries(int startInt, int endInt) {
         return startInt + new Random().nextInt(endInt - startInt);
     }
+
+    public static Boolean exists(List<WebElement> elementNoWait) {
+        return elementNoWait.size() > 0;
+    }
+
 }
