@@ -36,7 +36,12 @@ public class BasePage {
         }
     }
 
-    protected void waitForElementToDisappear(WebElement element) {
+    protected void waitForElementToDisappear(List<WebElement> elementsList) {
+        waitForJQuery();
+        wait.until((ExpectedCondition<Boolean>) driver -> exists(elementsList) == false);
+    }
+
+    protected void waitForElementToBecomeInvisible(WebElement element) {
         waitForJQuery();
         wait.until(ExpectedConditions.invisibilityOf(element));
     }
@@ -64,7 +69,7 @@ public class BasePage {
     }
 
     @Attachment(value = "URL")
-    private static String getCurrentUrl(){
+    private static String getCurrentUrl() {
         return driver.getCurrentUrl();
     }
 
@@ -91,5 +96,4 @@ public class BasePage {
     public static Boolean exists(List<WebElement> elementNoWait) {
         return elementNoWait.size() > 0;
     }
-
 }

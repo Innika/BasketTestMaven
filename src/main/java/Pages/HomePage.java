@@ -6,6 +6,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import java.util.List;
+
 import static Controllers.TabsContainer.Tab.MainCategory.SecondaryCategory;
 
 public class HomePage extends BasePage {
@@ -18,7 +20,7 @@ public class HomePage extends BasePage {
     public HomePage closeAgreementPopup() {
         takeScreenshotOnSuccess();
         this.closeAgreementPopupButton.click();
-        waitForElementToDisappear(this.closeAgreementPopupButton);
+        waitForElementToBecomeInvisible(this.closeAgreementPopupButton);
         takeScreenshotOnSuccess();
         return this;
     }
@@ -46,8 +48,8 @@ public class HomePage extends BasePage {
     @FindBy(xpath = "//i[@data-role='accept-consent']")
     WebElement closeAgreementPopupButton;
 
-    @FindBy(css = "div[data-box-name='left column'] div[data-role='tabs-container']") //(xpath = "//div[@data-box-name='left column']//div[@data-role='tabs-container']")
-            WebElement categoriesContainer;
+    @FindBy(css = "div[data-box-name='tabs']")
+    WebElement categoriesContainer;
 
     @FindBy(css = "[data-description='header logo']")
     WebElement logo;

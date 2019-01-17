@@ -14,7 +14,7 @@ public class TabsContainer {
     static WebElement tabContainerElement;
 
     public TabsContainer(WebElement tabContainerElement) throws Exception {
-        if (tabContainerElement.getAttribute("data-role").equals("tabs-container"))
+        if (tabContainerElement.getAttribute("data-box-name").equals("tabs"))
             this.tabContainerElement = tabContainerElement;
         else
             throw new Exception("The element isn't a TabsContainer type");

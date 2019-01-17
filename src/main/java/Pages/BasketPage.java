@@ -8,6 +8,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import java.util.List;
+
 public class BasketPage extends BasePage {
     public BasketPageValidator validator;
 
@@ -39,6 +41,7 @@ public class BasketPage extends BasePage {
     public BasketPage navigateToDeliveryAndPayment(){
         deliveryAndPaymentButton.click();
         waitForJQuery();
+        waitForElementToDisappear(deliveryAndPaymentButtonNoWait);
         takeScreenshotOnSuccess();
         return this;
     }
@@ -51,4 +54,7 @@ public class BasketPage extends BasePage {
 
     @FindBy(xpath = "//button[contains(., 'dostawa')]")
     static WebElement deliveryAndPaymentButton;
+
+    @FindBy(xpath = "//button[contains(., 'dostawa')]")
+    List<WebElement> deliveryAndPaymentButtonNoWait;
 }
