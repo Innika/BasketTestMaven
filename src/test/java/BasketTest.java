@@ -40,6 +40,4 @@ public class BasketTest extends BaseTest {
         basketPage.navigateTo().validator.verifyOrder(expectedOrder, basketPage.getOrder())
                 .navigateToDeliveryAndPayment();
     }
-
-    //jenkins change 1
 }
