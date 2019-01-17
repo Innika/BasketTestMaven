@@ -53,6 +53,8 @@ public class BaseTest {
     }
 
     private void deleteReportResources() throws Exception {
-        FileUtils.cleanDirectory(new File("allure-results"));
+        var dir = new File("allure-results");
+        if (dir.exists())
+            FileUtils.cleanDirectory(dir);
     }
 }
