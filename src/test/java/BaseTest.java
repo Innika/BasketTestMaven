@@ -3,6 +3,7 @@ import Pages.HomePage;
 import Pages.ProductPage;
 import Pages.ProductsListPage;
 import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterClass;
@@ -24,6 +25,7 @@ public class BaseTest {
 
         System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
         driver = new ChromeDriver();
+        driver.manage().window().setPosition(new Point( -2000, 1));
         driver.manage().window().maximize();
         driver.get("https://allegro.pl");
 

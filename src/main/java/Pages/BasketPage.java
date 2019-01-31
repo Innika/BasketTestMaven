@@ -49,7 +49,7 @@ public class BasketPage extends BasePage {
     @FindBy(css = "[data-role='cart-quantity']")
     static WebElement headerBasketQuantity;
 
-    @FindBy(css = "[id='goToDeskForm']")
+    @FindBy(css = "[id='goToDapfForm']")
     static WebElement basketForm;
 
     @FindBy(xpath = "//button[contains(., 'dostawa')]")

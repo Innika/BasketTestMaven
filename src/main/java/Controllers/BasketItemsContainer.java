@@ -13,22 +13,19 @@ import static Pages.BasePage.getPriceFromText;
 
 public class BasketItemsContainer {
     WebElement itemsContainerFormElement;
-    WebElement itemsContainerElement;
 
     public BasketItemsContainer(WebElement itemsContainerFormElement) throws Exception {
-        var itemsContainerFormElements = itemsContainerFormElement.findElements(By.cssSelector(".cart-items"));
-        if (itemsContainerFormElements.size() > 0) {
+        if (itemsContainerFormElement.findElements(By.cssSelector(".m-card")).size() > 0) {
             this.itemsContainerFormElement = itemsContainerFormElement;
-            this.itemsContainerElement = itemsContainerFormElements.get(0);
         } else
             throw new Exception("The element isn't a BasketItemsContainer type");
-    }
+}
 
     public List<Order.SingleProductTypeOrder> getSubOrders() {
         List<Order.SingleProductTypeOrder> subOrders = new ArrayList<>();
 
-        var productSections = this.itemsContainerElement
-                .findElements(By.cssSelector(".seller-items.ng-scope"));
+        var productSections = this.itemsContainerFormElement
+                .findElements(By.cssSelector("m-offer-row"));
 
         for (var productSection : productSections) {
             subOrders.add(new Order.SingleProductTypeOrder(getProductFromSubOrder(productSection),
@@ -47,22 +44,20 @@ public class BasketItemsContainer {
     }
 
     private BigDecimal getProductPricePerPiece(WebElement subOrder) {
-        List<WebElement> pricePerPiece = subOrder.findElements(By.xpath(".//per-piece/following-sibling::m-price"));
+        String pricePerPiece = subOrder.getAttribute("ng-reflect-m-amount"); //TODO: review if it will fail for items without the price per unit
 
-        if (pricePerPiece.size() > 0)
-            return getPriceFromText(pricePerPiece.get(0).getText());
+        if (pricePerPiece != null && pricePerPiece != "")
+            return getPriceFromText(pricePerPiece);
 
         else return getSubOrderPrice(subOrder);
     }
 
     private BigDecimal getSubOrderPrice(WebElement subOrder) {
-        return getPriceFromText(subOrder.findElement(
-                By.xpath(".//div[not(per-piece)]/m-price")).getText());
+        return getPriceFromText(subOrder.getAttribute("ng-reflect-m-total-discounted-price"));
     }
 
     private int getProductQuantity(WebElement subOrder) {
-        return Integer.parseInt(subOrder.findElement(
-                By.cssSelector("[type='number']")).getAttribute("value"));
+        return Integer.parseInt(subOrder.getAttribute("ng-reflect-m-quantity"));
     }
 
     public BigDecimal getSubTotalPrice() {
