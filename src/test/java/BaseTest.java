@@ -50,8 +50,8 @@ public class BaseTest {
                 file.getPath()));
         process.waitFor();
 
-        if (file.list().length > 0)
-            deleteReportResources();
+//        if (file.list().length > 0)
+//            deleteReportResources();
     }
 
     private void deleteReportResources() throws Exception {
