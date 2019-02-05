@@ -1,3 +1,5 @@
+package stepsDefinition;
+
 import Pages.BasketPage;
 import Pages.HomePage;
 import Pages.ProductPage;

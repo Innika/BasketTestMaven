@@ -1,5 +1,10 @@
+package stepsDefinition;
+
+import Listener.AllureListener;
 import Models.Order;
 import Models.Product;
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
@@ -7,10 +12,12 @@ import static Pages.BasePage.getRandomIntInBoundaries;
 
 @Listeners(AllureListener.class)
 public class BasketTest extends BaseTest {
+    Order expectedOrder;
 
     @Test(description = "Add products to the basket on Allegro and verify the order correctness")
+    @Given("When nese jajo")
     public void basketTest() throws Throwable {
-        Order expectedOrder = new Order();
+        expectedOrder = new Order();
         int singleTypeProductQuantity = 1;
 
         homePage.closeAgreementPopup();
@@ -36,7 +43,10 @@ public class BasketTest extends BaseTest {
             } else
                 i--;
         }
+    }
 
+    @Then("You are able to buy different products")
+    public void verifyResult() throws Exception{
         basketPage.navigateTo().validator.verifyOrder(expectedOrder, basketPage.getOrder())
                 .navigateToDeliveryAndPayment();
     }

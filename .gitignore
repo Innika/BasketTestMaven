@@ -93,5 +93,6 @@ fabric.properties
 allure-results
 target/maven-status/
 
-#target
+#folders
 target
+node_modules
