@@ -3,19 +3,20 @@ package stepsDefinition;
 import Listener.AllureListener;
 import Models.Order;
 import Models.Product;
+import cucumber.api.java.After;
+import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import org.testng.annotations.Listeners;
-import org.testng.annotations.Test;
 
 import static Pages.BasePage.getRandomIntInBoundaries;
 
-@Listeners(AllureListener.class)
+@Listeners({AllureListener.class})
 public class BasketTest extends BaseTest {
     Order expectedOrder;
 
-    @Test(description = "Add products to the basket on Allegro and verify the order correctness")
-    @Given("When nese jajo")
+    //@Test(description = "Add products to the basket on Allegro and verify the order correctness", alwaysRun = true)
+    @Given("You are on allegro.pl")
     public void basketTest() throws Throwable {
         expectedOrder = new Order();
         int singleTypeProductQuantity = 1;
@@ -46,8 +47,18 @@ public class BasketTest extends BaseTest {
     }
 
     @Then("You are able to buy different products")
-    public void verifyResult() throws Exception{
+    public void verifyResult() throws Exception {
         basketPage.navigateTo().validator.verifyOrder(expectedOrder, basketPage.getOrder())
                 .navigateToDeliveryAndPayment();
+    }
+
+    @Before
+    public void setUpCucumber() throws Exception {
+        setUp();
+    }
+
+    @After
+    public void tearDownCucumber() throws Exception {
+        tearDown();
     }
 }
