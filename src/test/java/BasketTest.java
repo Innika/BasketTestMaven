@@ -1,22 +1,24 @@
 import Models.Order;
 import Models.Product;
+import io.qameta.allure.Attachment;
+import io.qameta.allure.Step;
 import org.junit.jupiter.api.Test;
 
 import static Pages.BasePage.getRandomIntInBoundaries;
 
 public class BasketTest extends BaseTest {
 
-    @Test//"Add products to the basket on Allegro and verify the order correctness"
+    @Test   //"Add products to the basket on Allegro and verify the order correctness"
     public void basketTest() throws Throwable {
 
-        System.out.println(System.getProperty("driver"));
+        printParam();
 
         Order expectedOrder = new Order();
         int singleTypeProductQuantity = 1;
 
         homePage.closeAgreementPopup();
 
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 1; i++) {
             homePage.navigateTo().navigateToRandomCategory("dzialy");
 
             Product productArticle = productsListPage.SelectRandomProductArticle();
@@ -40,5 +42,10 @@ public class BasketTest extends BaseTest {
 
         basketPage.navigateTo().validator.verifyOrder(expectedOrder, basketPage.getOrder())
                 .navigateToDeliveryAndPayment();
+    }
+
+    @Attachment
+    public void printParam(){
+        System.out.println(System.getProperty("driver"));
     }
 }
