@@ -3,11 +3,12 @@ import Pages.HomePage;
 import Pages.ProductPage;
 import Pages.ProductsListPage;
 import org.apache.commons.io.FileUtils;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
 
 import java.io.File;
 import java.util.Date;
@@ -19,7 +20,7 @@ public class BaseTest {
     ProductPage productPage;
     BasketPage basketPage;
 
-    @BeforeClass
+    @BeforeEach
     public void setUp() throws Exception {
         deleteReportResources();
 
@@ -35,13 +36,13 @@ public class BaseTest {
         basketPage = new BasketPage(driver);
     }
 
-    @AfterClass
+    @AfterEach
     public void tearDown() throws Exception {
         driver.quit();
-        createHtmlReport();
     }
 
-    private void createHtmlReport() throws Exception {
+    @AfterAll
+    public static void createHtmlReport() throws Exception {
         var file = new File(String.format(".\\target\\reports\\%s",
                 new Date().toString().replace(':', '-')));
         file.mkdirs();
@@ -54,7 +55,7 @@ public class BaseTest {
             deleteReportResources();
     }
 
-    private void deleteReportResources() throws Exception {
+    private static void deleteReportResources() throws Exception {
         var dir = new File("allure-results");
         if (dir.exists())
             FileUtils.cleanDirectory(dir);

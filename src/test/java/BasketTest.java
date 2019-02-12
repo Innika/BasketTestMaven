@@ -1,14 +1,12 @@
 import Models.Order;
 import Models.Product;
-import org.testng.annotations.Listeners;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
 import static Pages.BasePage.getRandomIntInBoundaries;
 
-@Listeners(AllureListener.class)
 public class BasketTest extends BaseTest {
 
-    @Test(description = "Add products to the basket on Allegro and verify the order correctness")
+    @Test//"Add products to the basket on Allegro and verify the order correctness"
     public void basketTest() throws Throwable {
         Order expectedOrder = new Order();
         int singleTypeProductQuantity = 1;

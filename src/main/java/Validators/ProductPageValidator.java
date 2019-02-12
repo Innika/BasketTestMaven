@@ -3,9 +3,9 @@ package Validators;
 import Models.Product;
 import Pages.ProductPage;
 import io.qameta.allure.Step;
-import org.testng.Assert;
 
 import static Pages.BasePage.takeScreenshotOnSuccess;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ProductPageValidator extends BasePageValidator {
     public ProductPageValidator(ProductPage currentPageInstance) {
@@ -14,7 +14,7 @@ public class ProductPageValidator extends BasePageValidator {
 
     @Step("Verify if product opened is the same as the one we clicked on before")
     public ProductPage productSelectedMatсhesArticle(Product productArticle, Product selectedProduct) {
-        Assert.assertEquals(productArticle.name, selectedProduct.name);
+        assertEquals(productArticle.name, selectedProduct.name);
         takeScreenshotOnSuccess();
         return (ProductPage) this.pageInstance;
     }
