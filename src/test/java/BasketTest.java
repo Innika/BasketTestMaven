@@ -9,7 +9,7 @@ public class BasketTest extends BaseTest {
     @Test//"Add products to the basket on Allegro and verify the order correctness"
     public void basketTest() throws Throwable {
 
-        System.getProperty("driver");
+        System.out.println(System.getProperty("driver"));
 
         Order expectedOrder = new Order();
         int singleTypeProductQuantity = 1;
