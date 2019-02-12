@@ -2,14 +2,13 @@ import Pages.BasketPage;
 import Pages.HomePage;
 import Pages.ProductPage;
 import Pages.ProductsListPage;
-import io.qameta.allure.Attachment;
+import io.qameta.allure.Step;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.io.File;
 import java.util.Date;
@@ -61,7 +60,7 @@ public class BaseTest {
             FileUtils.cleanDirectory(dir);
     }
 
-    @Attachment
+    @Step
     public String printBrowserName(String browserName) {
         return browserName;
     }
