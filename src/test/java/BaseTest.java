@@ -54,7 +54,7 @@ public class BaseTest {
 
     private static void deleteReportResources() throws Exception {
         var dir = new File("allure-results");
-        if (dir.exists(і))
+        if (dir.exists())
             FileUtils.cleanDirectory(dir);
     }
 }
