@@ -50,14 +50,11 @@ public class BaseTest {
         var process = Runtime.getRuntime().exec(String.format("cmd.exe /c allure generate -o \"%s\"",
                 file.getPath()));
         process.waitFor();
-
-        if (file.list().length > 0)
-            deleteReportResources();
     }
 
     private static void deleteReportResources() throws Exception {
         var dir = new File("allure-results");
-        if (dir.exists())
+        if (dir.exists(і))
             FileUtils.cleanDirectory(dir);
     }
 }
