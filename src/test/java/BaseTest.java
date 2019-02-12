@@ -2,6 +2,7 @@ import Pages.BasketPage;
 import Pages.HomePage;
 import Pages.ProductPage;
 import Pages.ProductsListPage;
+import io.qameta.allure.Attachment;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -24,9 +25,11 @@ public class BaseTest {
     public void setUp() throws Exception {
         deleteReportResources();
 
-        System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
-        driver = new ChromeDriver();
-        driver.manage().window().setPosition(new Point( -2000, 1));
+        String browserName = System.getProperty("driver");
+        printBrowserName(browserName);
+
+        driver = BrowserFactory.InitBrowser(browserName);
+        driver.manage().window().setPosition(new Point(-2000, 1));
         driver.manage().window().maximize();
         driver.get("https://allegro.pl");
 
@@ -56,5 +59,10 @@ public class BaseTest {
         var dir = new File("allure-results");
         if (dir.exists())
             FileUtils.cleanDirectory(dir);
+    }
+
+    @Attachment
+    public String printBrowserName(String browserName) {
+        return browserName;
     }
 }
